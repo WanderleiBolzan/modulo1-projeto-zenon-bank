@@ -1,4 +1,4 @@
-package br.com.zenon.zenon_fraud_detector;
+package br.com.zenon.fraud.detector;
 
 /**
  * Hello world!
