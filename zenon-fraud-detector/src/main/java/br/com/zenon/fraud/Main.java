@@ -2,6 +2,7 @@ package br.com.zenon.fraud;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 public class Main {
 	public static void main(String[] args) {
@@ -28,5 +29,29 @@ public class Main {
 
 		transactions.stream().limit(10).forEach(IO::println);
 
+		IO.println("--------------> Apenas transações onde isFraud == true, imprima o tamanho da lista.-------------------");
+		var fraudAnalyzer = new FraudAnalyzer(transactions);
+
+		long fraudCounts = fraudAnalyzer.countFrauds();
+		IO.println("Total de Frauds: " + fraudCounts);
+
+		IO.println("--------------> Imprima as três frauds de maior valor.-------------------");
+        List<Transaction> higestFrauds =  fraudAnalyzer.findHighestValueFrauds(3);
+        higestFrauds.stream().map(Transaction::amount).forEach(IO::println);
+
+		IO.println("Obter apenas os nomes dos clientes de origem (nameOrig) dessas fraudes e depois gere uma lista sem repetições (Set ou distinct) com os 5 maiores clientes suspeitos.");
+		List<String> suspiciousClients = fraudAnalyzer.findTopSuspiciousClients(5);
+		suspiciousClients.forEach(IO::println);
+
+		IO.println("Calcule o prejuízo total causado pelas fraudes (soma dos amount).");
+		BigDecimal totalFraudLoss = fraudAnalyzer.calculateTotalFraudLoss();
+
+		IO.println("Prejuízo total das Frauds: " + totalFraudLoss);
+
+		IO.println("Conte quantas fraudes ocorreram por tipo de transação (CASH_OUT, TRANSFER, etc...).");
+		Map<TransactionType, Long> fraudCountByType = fraudAnalyzer.countFraudsByType();
+
+		IO.println("Frauds por Tipo: ");
+		IO.println(fraudCountByType);
 	}
 }
