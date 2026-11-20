@@ -9,7 +9,7 @@ import java.util.*;
 
 public class TransactionIngestor {
 
-    public final int FRAUD_LIMIT = 50_000;
+    public final int FRAUD_LIMIT = 100_000;
 
     public List<Transaction> read(String filename) {
 
